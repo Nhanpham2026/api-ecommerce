@@ -1,0 +1,5 @@
+username,password,expected_status
+wrong_user,test123,401
+test@gmail.com,wrong_pass,401
+,empty_pass,400
+invalid_email,123456,401
