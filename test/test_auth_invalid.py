@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from pages.auth import AuthClient
+from pages.login import Login_Client
 import csv
 import pytest
 
@@ -14,7 +14,7 @@ def load_csv_data(filepath):
 #get
 @pytest.mark.parametrize("case", load_csv_data("data/invalid_login.csv"))
 def test_invalid_login(case):
-    client = AuthClient()
+    client = Login_Client()
     payload = {
         "username": case["username"],
         "password": case["password"]
