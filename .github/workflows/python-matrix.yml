@@ -27,14 +27,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests and generate report
+            - name: Run tests and generate report
         run: |
-          version=${{ matrix.python-version }}
-          version_safe=${version//./}  # Chuyển 3.8 → 38
-          pytest --html=report-$version_safe.html --self-contained-html
+          safe_ver=$(echo "${{ matrix.python-version }}" | tr -d '.')
+          pytest --html=report-${safe_ver}.html --self-contained-html
+          echo "SAFE_VER=$safe_ver" >> $GITHUB_ENV
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         with:
           name: test-report-${{ matrix.python-version }}
-          path: report-${{ matrix.python-version // '.' }}.html
+          path: report-${{ env.SAFE_VER }}.html
