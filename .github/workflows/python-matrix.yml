@@ -29,10 +29,12 @@ jobs:
 
       - name: Run tests and generate report
         run: |
-          pytest --html=report.html --self-contained-html
+          version=${{ matrix.python-version }}
+          version_safe=${version//./}  # Chuyển 3.8 → 38
+          pytest --html=report-$version_safe.html --self-contained-html
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         with:
           name: test-report-${{ matrix.python-version }}
-          path: report-${{ matrix.python-version }}.html
+          path: report-${{ matrix.python-version // '.' }}.html
